@@ -287,7 +287,7 @@ PlasmaComponents3.ItemDelegate {
                 spacing: Kirigami.Units.smallSpacing
 
                 PlasmaComponents3.Label {
-                    text: xi18n("Power profiles may be supported on your device.<nl/>Try installing the <command>power-profiles-daemon</command> package using your distribution's package manager and restarting the system.")
+                    text: i18n("Power profiles may be supported on your device.\nTry installing the power-profiles-daemon package using your distribution's package manager and restarting the system.")
                     textFormat: Text.PlainText
                     enabled: false
                     font: Kirigami.Theme.smallFont

@@ -5,7 +5,6 @@ import org.kde.plasma.core as PlasmaCore
 import "js/colorType.js" as ColorType
 import org.kde.kirigami as Kirigami
 import org.kde.kitemmodels as KItemModels
-import org.kde.plasma.plasma5support as Plasma5Support
 
 PlasmoidItem {
     id: root
@@ -116,23 +115,13 @@ PlasmoidItem {
         || Plasmoid.location === PlasmaCore.Types.BottomEdge
         || Plasmoid.location === PlasmaCore.Types.LeftEdge)
 
-    property int plasmaVersion
-
-    Plasma5Support.DataSource {
-        id: executable
-        engine: "executable"
-        connectedSources: ["plasmashell -v"]
-        onNewData: {
-            if(data["exit code"] == 0){
-                plasmaVersion = data.stdout.split(" ")[1].split(".")[1];
-            }
-            disconnectSource(connectedSources)
-        }
-    }
+    // Plasma 6.4+ APIs are used directly; the former runtime version probe
+    // launched a shell command during every applet load and produced invalid
+    // DataSource callbacks on current Plasma.
     
     switchHeight: fullRepWidth
     switchWidth: fullRepWidth
-    preferredRepresentation: inPanel ? Plasmoid.compactRepresentation : Plasmoid.fullRepresentation
+    preferredRepresentation: inPanel ? compactRepresentation : fullRepresentation
     fullRepresentation: FullRepresentation { }
     compactRepresentation: CompactRepresentation {}
 

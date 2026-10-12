@@ -25,8 +25,8 @@ PageTemplate {
         id: config
     }
 
-    property bool volumeFeedback: config.audioFeedback
-    property bool globalMute: config.globalMute
+    property bool volumeFeedback: config.audioFeedback === true
+    property bool globalMute: config.globalMute === true
     property string displayName: i18n("Audio Volume")
     property QtObject draggedStream: null
 
@@ -398,7 +398,7 @@ PageTemplate {
                 showCloseButton: true
                 type: Kirigami.MessageType.Warning
 
-                text: xi18nc("@info", "Prolonged use of this feature will damage the device's speakers. Only use it temporarily to make quiet media audible.")
+                text: i18nc("@info", "Prolonged use of this feature will damage the device's speakers. Only use it temporarily to make quiet media audible.")
             }
 
             PC3.Switch {

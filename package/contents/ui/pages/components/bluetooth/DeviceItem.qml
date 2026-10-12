@@ -30,7 +30,7 @@ PlasmaExtras.ExpandableListItem {
     icon: model.Icon
     title: model.DeviceFullName
     subtitle: infoText()
-    isBusy: model.Connecting
+    isBusy: Boolean(model.Connecting)
     isDefault: model.Connected
     defaultActionButtonAction: QQC2.Action {
         icon.name: root.model.Connected ? "network-disconnect-symbolic" : "network-connect-symbolic"

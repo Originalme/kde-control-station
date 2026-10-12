@@ -144,8 +144,8 @@ RowLayout {
 
             PlasmaComponents3.ToolTip {
                 text: planeModeSwitchButton.checked ?
-                    xi18nc("@info", "Disable airplane mode<nl/><nl/>This will enable Wi-Fi and Bluetooth") :
-                    xi18nc("@info", "Enable airplane mode<nl/><nl/>This will disable Wi-Fi and Bluetooth")
+                    i18nc("@info", "Disable airplane mode<nl/><nl/>This will enable Wi-Fi and Bluetooth") :
+                    i18nc("@info", "Enable airplane mode<nl/><nl/>This will disable Wi-Fi and Bluetooth")
             }
         }
     }
@@ -176,18 +176,6 @@ RowLayout {
             id: tooltip
         }
 
-        Connections {
-            target: handler
-            function onHotspotCreated() {
-                hotspotButton.checked = true
-                tooltip.text = i18n("Disable Hotspot")
-            }
-
-            function onHotspotDisabled() {
-                hotspotButton.checked = false
-                tooltip.text = i18n("Create Hotspot")
-            }
-        }
 
         Component.onCompleted: {
             checked = PlasmaNM.Configuration.hotspotConnectionPath

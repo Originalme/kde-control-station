@@ -41,26 +41,9 @@ PageTemplate {
         readonly property bool isSomehowFullyCharged: batteryControl.pluggedIn && batteryControl.state === BatteryControlModel.FullyCharged
     }
 
-    property var possibleInhibitionControls: [
-        `
-            import org.kde.plasma.private.batterymonitor
-            PowerManagementControl {
-                id: inhibitionControl
-            }
-        `,
-        `
-            import org.kde.plasma.private.batterymonitor
-            InhibitionControl {
-                id: inhibitionControl
-            }
-        `
-    ]
-
-    property var inhibitionControl: Qt.createQmlObject(
-        root.plasmaVersion < 3 ? possibleInhibitionControls[0] : possibleInhibitionControls[1], 
-        batterymonitor, 
-        "inhibitionControl"
-    )
+    property var inhibitionControl: InhibitionControl {
+        id: inhibitionControl
+    }
 
     readonly property bool kcmAuthorized: KAuthorized.authorizeControlModule("powerdevilprofilesconfig")
     readonly property bool kcmEnergyInformationAuthorized: KAuthorized.authorizeControlModule("kcm_energyinfo")
@@ -105,7 +88,7 @@ PageTemplate {
         remainingTime: batteryControl.remainingTime
         activeProfile: powerProfilesControl.activeProfile
         activeProfileError: powerProfilesControl.profileError
-        inhibitions: inhibitionControl.inhibitions
+        inhibitions: inhibitionControl.requestedInhibitions
         inhibitsLidAction: inhibitionControl.isLidPresent && !inhibitionControl.triggersLidAction
         profilesInstalled: powerProfilesControl.isPowerProfileDaemonInstalled
         profiles: powerProfilesControl.profiles

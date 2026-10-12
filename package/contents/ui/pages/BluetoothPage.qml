@@ -32,7 +32,7 @@ PageTemplate {
     PlasmaBt.DevicesProxyModel {
         id: devicesModel
      //   hideBlockedDevices: true
-        sourceModel: PlasmaBt.SharedDevicesStateProxyModel
+        sourceModel: BluezQt.DevicesModel { }
     }
 
     function setBluetoothEnabled(enable: bool): void {
@@ -100,7 +100,7 @@ PageTemplate {
         contentItem: ListView {
             id: listView
 
-            model: (BluezQt.Manager.adapters.length > 0 && !BluezQt.Manager.bluetoothBlocked) ? root.plasmaVersion < 2 ? oldDevicesModel : devicesModel : null
+            model: (BluezQt.Manager.adapters.length > 0 && !BluezQt.Manager.bluetoothBlocked) ? devicesModel : null
             clip: true
             currentIndex: -1
             boundsBehavior: Flickable.StopAtBounds

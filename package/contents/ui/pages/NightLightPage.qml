@@ -127,7 +127,7 @@ PageTemplate {
                             toggle();
                         }
                     }
-                    onToggled: plasmaVersion < 4 ? control.toggleInhibition() : NightLightInhibitor.toggleInhibition()
+                    onToggled: NightLightInhibitor.toggleInhibition()
                 }
 
                 PlasmaComponents3.Button {
@@ -200,63 +200,31 @@ PageTemplate {
     }
 
 
-    property var possibleNightLightControls: [
-        `
+    property var control: Qt.createQmlObject(`
+        import org.kde.plasma.private.brightnesscontrolplugin
+        import org.kde.plasma.workspace.dbus as DBus
 
-            import org.kde.plasma.private.brightnesscontrolplugin
+        DBus.Properties {
+            id: nightLightControl
+            busType: DBus.BusType.Session
+            service: "org.kde.KWin.NightLight"
+            path: "/org/kde/KWin/NightLight"
+            iface: "org.kde.KWin.NightLight"
 
-            NightLightControl {
-                id: control
-
-                readonly property bool transitioning: control.currentTemperature != control.targetTemperature
-                readonly property bool hasSwitchingTimes: control.mode != 3
-                readonly property bool togglable: !control.inhibited || control.inhibitedFromApplet
-            }
-        `,
-        `
-            import org.kde.plasma.private.brightnesscontrolplugin
-            import org.kde.plasma.workspace.dbus as DBus
-
-            DBus.Properties {
-                id: nightLightControl
-                busType: DBus.BusType.Session
-                service: "org.kde.KWin.NightLight"
-                path: "/org/kde/KWin/NightLight"
-                iface: "org.kde.KWin.NightLight"
-
-                // This property holds a value to indicate if Night Light is available.
-                readonly property bool available: Boolean(properties.available)
-                // This property holds a value to indicate if Night Light is enabled.
-                readonly property bool enabled: Boolean(properties.enabled)
-                // This property holds a value to indicate if Night Light is running.
-                readonly property bool running: Boolean(properties.running)
-                // This property holds a value to indicate whether night light is currently inhibited.
-                readonly property bool inhibited: Boolean(properties.inhibited)
-                // This property holds a value to indicate whether night light is currently inhibited from the applet can be uninhibited through it.
-                readonly property bool inhibitedFromApplet: NightLightInhibitor.inhibited
-                // This property holds a value to indicate which mode is set for transitions (0 - automatic location, 1 - manual location, 2 - manual timings, 3 - constant)
-                readonly property int mode: Number(properties.mode)
-                // This property holds a value to indicate if Night Light is on day mode.
-                readonly property bool daylight: Boolean(properties.daylight)
-                // This property holds a value to indicate currently applied color temperature.
-                readonly property int currentTemperature: Number(properties.currentTemperature)
-                // This property holds a value to indicate currently applied color temperature.
-                readonly property int targetTemperature: Number(properties.targetTemperature)
-                // This property holds a value to indicate the end time of the previous color transition in msec since epoch.
-                readonly property double currentTransitionEndTime: Number(properties.previousTransitionDateTime) * 1000 + Number(properties.previousTransitionDuration)
-                // This property holds a value to indicate the start time of the next color transition in msec since epoch.
-                readonly property double scheduledTransitionStartTime: Number(properties.scheduledTransitionDateTime) * 1000
-
-                readonly property bool transitioning: currentTemperature != targetTemperature
-                readonly property bool hasSwitchingTimes: mode != 3
-                readonly property bool togglable: !inhibited || inhibitedFromApplet
-            }
-        `
-    ]
-
-    property var control: Qt.createQmlObject(
-        root.plasmaVersion < 4 ? possibleNightLightControls[0] : possibleNightLightControls[1],
-        nightLightPage,
-        "nightLightControl"
-    )
+            readonly property bool available: Boolean(properties.available)
+            readonly property bool enabled: Boolean(properties.enabled)
+            readonly property bool running: Boolean(properties.running)
+            readonly property bool inhibited: Boolean(properties.inhibited)
+            readonly property bool inhibitedFromApplet: NightLightInhibitor.inhibited
+            readonly property int mode: Number(properties.mode)
+            readonly property bool daylight: Boolean(properties.daylight)
+            readonly property int currentTemperature: Number(properties.currentTemperature)
+            readonly property int targetTemperature: Number(properties.targetTemperature)
+            readonly property double currentTransitionEndTime: Number(properties.previousTransitionDateTime) * 1000 + Number(properties.previousTransitionDuration)
+            readonly property double scheduledTransitionStartTime: Number(properties.scheduledTransitionDateTime) * 1000
+            readonly property bool transitioning: currentTemperature !== targetTemperature
+            readonly property bool hasSwitchingTimes: mode !== 3
+            readonly property bool togglable: !inhibited || inhibitedFromApplet
+        }
+    `, nightLightPage, "nightLightControl")
 }

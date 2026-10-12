@@ -1,11 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
+import org.kde.kirigami as Kirigami
 import org.kde.kquickcontrolsaddons 2.1
 import org.kde.plasma.components 3.0 as PlasmaComponents3
-import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-
 PlasmaComponents3.ScrollView {
         id: scrollView
 
@@ -45,7 +44,7 @@ PlasmaComponents3.ScrollView {
         required property var profileHolds
 
         property alias isManuallyInhibited: pmSwitch.isManuallyInhibited
-        property alias isManuallyInhibitedError: pmSwitch.isManuallyInhibited
+        property alias isManuallyInhibitedError: pmSwitch.isManuallyInhibitedError
 
         signal inhibitionChangeRequested(bool inhibit)
         signal activateProfileRequested(string profile)
@@ -68,7 +67,7 @@ PlasmaComponents3.ScrollView {
         Column {
             id: batteryList
 
-            spacing: PlasmaCore.Units.smallSpacing * 2
+            spacing: Kirigami.Units.smallSpacing * 2
 
             readonly property Item firstHeaderItem: {
                 if (powerProfileItem.visible) {

@@ -5,8 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Removed the obsolete Plasma version probe and migrated battery, night light, Bluetooth, and network code to current Plasma 6 APIs.
+
 ### Fixed
-- Icons now follow the colour scheme correctly.
+- Fixed undefined model data, layout warnings, and invalid translation calls reported by Plasma 6.7.
 
 ### Added
 - Option to play a feedback sound when changing volume. See [#32](https://github.com/Prayag2/kde_controlcentre/issues/32)
