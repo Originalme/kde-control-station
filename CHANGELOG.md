@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed undefined model data, layout warnings, and invalid translation calls reported by Plasma 6.7.
+- Quick Actions can now be saved from the Plasma configuration dialog.
 
 ### Added
 - Option to play a feedback sound when changing volume. See [#32](https://github.com/Prayag2/kde_controlcentre/issues/32)

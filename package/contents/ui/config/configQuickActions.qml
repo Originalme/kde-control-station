@@ -8,7 +8,7 @@ import QtQuick.Layouts
 KCM.SimpleKCM {
     id: quickActionsForm
 
-    property bool cfg_enableQuickActions: Plasmoid.configuration.enableQuickActions
+    property alias cfg_enableQuickActions: enabledRadioButton.checked
 
     Kirigami.FormLayout {
 
@@ -18,7 +18,6 @@ KCM.SimpleKCM {
 
             ButtonGroup { 
                 id: group 
-                onClicked: button => quickActionsForm.cfg_enableQuickActions = button.text === "Enabled"
             }
 
             ColumnLayout {
@@ -29,8 +28,8 @@ KCM.SimpleKCM {
                 }
 
                 RadioButton {
-                    checked: quickActionsForm.cfg_enableQuickActions
-                    text: qsTr("Enabled")
+                    id: enabledRadioButton
+                    text: i18n("Enabled")
                     ButtonGroup.group: group
                 }
             }
@@ -44,7 +43,7 @@ KCM.SimpleKCM {
 
                 RadioButton {
                     checked: !quickActionsForm.cfg_enableQuickActions
-                    text: qsTr("Disabled")
+                    text: i18n("Disabled")
                     ButtonGroup.group: group
                 }
             }
